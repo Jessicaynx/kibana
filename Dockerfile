@@ -13,7 +13,8 @@ RUN mkdir -p /var/www \
 RUN sudo htpasswd -c /etc/nginx/htpasswd.users kibanaadmin
 
 # Copy Nginx config
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY kibana.conf /etc/nginx/conf.d/kibana.conf
 
 # Set wrapper for runtime config
 COPY init.sh /init
