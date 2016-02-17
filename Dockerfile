@@ -14,15 +14,16 @@ RUN mkdir -p /var/www \
   | tar --transform "s/^kibana-$KIBANA_VERSION/kibana/" -xvz -C /var/www
 
 # Add default credentials
-RUN htpasswd -c /etc/nginx/htpasswd.users kibanaadmin
+RUN htpasswd -cb /etc/nginx/.htpasswd kibana "docker"
 
 # Copy Nginx config
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY kibana.conf /etc/nginx/conf.d/kibana.conf
 
 # Set wrapper for runtime config
-COPY init.sh /init
-ENTRYPOINT ["/init"]
+COPY init.sh /
+RUN chmod +x /init.sh
+ENTRYPOINT ["/init.sh"]
 
 # Run nginx
 CMD ["nginx", "-g", "daemon off;"]
