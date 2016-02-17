@@ -1,7 +1,11 @@
 FROM nginx:1.7
+MAINTAINER Helder Correia <heldercorreia@morfose.net>
+
 # Install htpasswd utility and curl
-RUN yum -y install epel-release \
-    && yum -y install nginx httpd-tools curl 
+RUN apt-get update \
+    && apt-get install -y curl apache2-utils \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install Kibana
 ENV KIBANA_VERSION 4.0.3
