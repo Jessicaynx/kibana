@@ -1,4 +1,4 @@
-FROM nginx:1.6.3
+FROM nginx:1.7
 # Install htpasswd utility and curl
 RUN sudo yum -y install epel-release \
     && sudo yum -y install nginx httpd-tools curl \
