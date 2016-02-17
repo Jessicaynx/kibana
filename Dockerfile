@@ -12,7 +12,7 @@ ENV KIBANA_VERSION 4.0.3
 RUN mkdir -p /var/www \
  && curl -s https://download.elasticsearch.org/kibana/kibana/kibana-$KIBANA_VERSION-linux-x64.tar.gz \
   | tar --transform "s/^kibana-$KIBANA_VERSION/kibana/" -xvz -C /var/www \
-  mv /var/www/kibana-linux-x64 /var/www/kibana
+ && mv /var/www/kibana-linux-x64 /var/www/kibana
 
 # Add default credentials
 RUN htpasswd -cb /etc/nginx/.htpasswd kibana "docker"
