@@ -1,7 +1,7 @@
 FROM nginx:1.7
 # Install htpasswd utility and curl
 RUN sudo yum -y install epel-release \
-    && sudo yum -y install nginx httpd-tools curl \
+    && sudo yum -y install nginx httpd-tools curl 
 
 # Install Kibana
 ENV KIBANA_VERSION 4.0.3
