@@ -1,25 +1,19 @@
 #!/bin/bash
 
-set -e
+service=nginx
 
-# Add kibana as command if needed
-if [[ "$1" == -* ]]; then
-	set -- kibana "$@"
+if (( $(ps -ef | grep -v grep | grep $service | wc -l) > 0 ))
+then
+echo "$service is running!!!"
+else
+/etc/init.d/$service start
 fi
 
-# Run as user "kibana" if the command is "kibana"
-if [ "$1" = 'kibana' ]; then
-	if [ "$ELASTICSEARCH_URL" -o "$ELASTICSEARCH_PORT_9200_TCP" ]; then
-		: ${ELASTICSEARCH_URL:='http://elasticsearch:9200'}
-		sed -ri "s!^(\#\s*)?(elasticsearch_url:).*!\2 '$ELASTICSEARCH_URL'!" /opt/kibana/config/kibana.yml
-	else
-		echo >&2 'warning: missing ELASTICSEARCH_PORT_9200_TCP or ELASTICSEARCH_URL'
-		echo >&2 '  Did you forget to --link some-elasticsearch:elasticsearch'
-		echo >&2 '  or -e ELASTICSEARCH_URL=http://some-elasticsearch:9200 ?'
-		echo >&2
-	fi
-	
-	set -- gosu kibana tini -- "$@"
-fi
+service=kibana
 
-exec "$@"
+if (( $(ps -ef | grep -v grep | grep $service | wc -l) > 0 ))
+then
+echo "$service is running!!!"
+else
+/etc/init.d/$service start
+fi
