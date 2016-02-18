@@ -1,14 +1,18 @@
-FROM kibana:4.0.3
-MAINTAINER Jessica Liu
+FROM nginx:1.6
+MAINTAINER Helder Correia <heldercorreia@morfose.net>
 
-# Update the repository
-RUN apt-get update
-# Install necessary tools
-RUN apt-get install -y vim wget dialog net-tools
+# Install htpasswd utility and curl
+RUN apt-get update \
+    && apt-get install -y curl apache2-utils \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Download and Install Nginx
-RUN apt-get install -y nginx 
-
+# Install Kibana
+ENV KIBANA_VERSION 4.0.3
+RUN mkdir -p /var/www \
+ && curl -s https://download.elasticsearch.org/kibana/kibana/kibana-$KIBANA_VERSION-linux-x64.tar.gz \
+  | tar --transform "s/^kibana-$KIBANA_VERSION/kibana/" -xvz -C /var/www \
+ && mv /var/www/kibana-linux-x64 /var/www/kibana
 
 # Add default credentials
 RUN htpasswd -cb /etc/nginx/.htpasswd kibana "docker"
@@ -18,12 +22,9 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY kibana.conf /etc/nginx/conf.d/kibana.conf
 COPY kibana.yml /var/www/kibana/config/kibana.yml
 COPY kibana /etc/init.d/kibana
-RUN chmod +x /etc/init.d/kibana \
- && update-rc.d kibana defaults 96 9
+RUN chmod +x /etc/init.d/kibana
 
-# Expose ports
-EXPOSE 80
-
+EXPOSE 5601
 # Set wrapper for runtime config
 COPY init.sh /
 RUN chmod +x /init.sh
@@ -32,5 +33,6 @@ ENTRYPOINT ["/init.sh"]
 # Run nginx
 CMD ["nginx", "-g", "daemon off;"]
 
-CMD service kibana start 
-CMD service nginx start 
+RUN update-rc.d kibana defaults 96 9 \
+ && service kibana start \
+ && service nginx start 
