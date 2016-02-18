@@ -7,7 +7,7 @@ RUN apt-get update
 RUN apt-get install -y vim wget dialog net-tools
 
 # Download and Install Nginx
-RUN apt-get install -y nginx httpd-tools
+RUN apt-get install -y nginx 
 
 
 # Add default credentials
