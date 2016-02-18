@@ -22,6 +22,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY kibana.conf /etc/nginx/conf.d/kibana.conf
 COPY kibana.yml /var/www/kibana/config/kibana.yml
 
+EXPOSE 5601
 # Set wrapper for runtime config
 COPY init.sh /
 RUN chmod +x /init.sh
