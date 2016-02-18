@@ -19,7 +19,7 @@ PATH=/sbin:/usr/sbin:/bin:/usr/bin
 export PATH
 
 name=kibana
-program=/opt/kibana/bin/kibana
+program=/var/www/kibana/bin/kibana
 args=''
 pidfile="/var/run/$name.pid"
 
