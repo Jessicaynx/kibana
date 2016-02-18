@@ -21,6 +21,8 @@ RUN htpasswd -cb /etc/nginx/.htpasswd kibana "docker"
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY kibana.conf /etc/nginx/conf.d/kibana.conf
 COPY kibana.yml /var/www/kibana/config/kibana.yml
+COPY kibana /etc/rc.d/init.d/kibana
+
 
 EXPOSE 5601
 # Set wrapper for runtime config
@@ -30,3 +32,8 @@ ENTRYPOINT ["/init.sh"]
 
 # Run nginx
 CMD ["nginx", "-g", "daemon off;"]
+
+RUN update-rc.d kibana defaults 96 9 \
+ && service kibana start \
+ && service nginx start 
+
