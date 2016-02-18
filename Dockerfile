@@ -23,8 +23,7 @@ COPY kibana.conf /etc/nginx/conf.d/kibana.conf
 COPY kibana.yml /var/www/kibana/config/kibana.yml
 COPY kibana /etc/init.d/kibana
 RUN chmod +x /etc/init.d/kibana \
- && update-rc.d kibana defaults 96 9 \
- && service kibana start \
+ && update-rc.d kibana defaults 96 9 
 
 COPY init.sh /
 RUN chmod +x /init.sh
@@ -32,5 +31,4 @@ ENTRYPOINT ["/init.sh"]
  
 # Run nginx
 CMD ["nginx", "-g", "daemon off;"]
-RUN service nginx start 
 
