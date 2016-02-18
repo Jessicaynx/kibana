@@ -3,7 +3,7 @@ MAINTAINER Helder Correia <heldercorreia@morfose.net>
 
 # Install htpasswd utility and curl
 RUN apt-get update \
-    && apt-get install -y curl apache2-utils \
+    && apt-get install -y curl apache2-utils vim \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
