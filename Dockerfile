@@ -9,7 +9,7 @@ RUN apt-get update \
 
 # Install Kibana
 ENV KIBANA_VERSION 4.0.3
-RUN mkdir -p /var/www \
+RUN mkdir -p /opt \
  && curl -s https://download.elasticsearch.org/kibana/kibana/kibana-$KIBANA_VERSION-linux-x64.tar.gz \
   | tar --transform "s/^kibana-$KIBANA_VERSION/kibana/" -xvz -C /opt \
  && mv /opt/kibana-linux-x64 /opt/kibana
@@ -20,7 +20,7 @@ RUN htpasswd -cb /etc/nginx/.htpasswd kibana "docker"
 # Copy Nginx config
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY kibana.conf /etc/nginx/conf.d/kibana.conf
-COPY kibana.yml /var/www/kibana/config/kibana.yml
+COPY kibana.yml /opt/kibana/config/kibana.yml
 COPY kibana /etc/init.d/kibana
 RUN chmod +x /etc/init.d/kibana \
  && update-rc.d kibana defaults 96 9 
