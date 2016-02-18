@@ -21,7 +21,7 @@ RUN htpasswd -cb /etc/nginx/.htpasswd kibana "docker"
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY kibana.conf /etc/nginx/conf.d/kibana.conf
 COPY kibana.yml /var/www/kibana/config/kibana.yml
-COPY kibana /etc/rc.d/init.d/kibana
+COPY kibana /etc/init.d/kibana
 
 
 EXPOSE 5601
