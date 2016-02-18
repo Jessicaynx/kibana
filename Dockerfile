@@ -20,6 +20,7 @@ RUN htpasswd -cb /etc/nginx/.htpasswd kibana "docker"
 # Copy Nginx config
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY kibana.conf /etc/nginx/conf.d/kibana.conf
+COPY kibana.yml /var/www/kibana/config/kibana.yml
 
 # Set wrapper for runtime config
 COPY init.sh /
