@@ -11,8 +11,8 @@ RUN apt-get update \
 ENV KIBANA_VERSION 4.0.3
 RUN mkdir -p /var/www \
  && curl -s https://download.elasticsearch.org/kibana/kibana/kibana-$KIBANA_VERSION-linux-x64.tar.gz \
-  | tar --transform "s/^kibana-$KIBANA_VERSION/kibana/" -xvz -C /var/www \
- && mv /var/www/kibana-linux-x64 /opt/kibana
+  | tar --transform "s/^kibana-$KIBANA_VERSION/kibana/" -xvz -C /opt \
+ && mv /opt/kibana-linux-x64 /opt/kibana
 
 # Add default credentials
 RUN htpasswd -cb /etc/nginx/.htpasswd kibana "docker"
