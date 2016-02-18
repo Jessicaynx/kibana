@@ -34,5 +34,5 @@ ENTRYPOINT ["/init.sh"]
 # Run nginx
 CMD ["nginx", "-g", "daemon off;"]
 
-CMD service kibana start \
+CMD service kibana start 
 CMD service nginx start 
