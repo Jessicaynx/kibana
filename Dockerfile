@@ -1,4 +1,4 @@
-FROM nginx:1.6
+FROM nginx:1.7
 MAINTAINER Helder Correia <heldercorreia@morfose.net>
 
 # Install htpasswd utility and curl
