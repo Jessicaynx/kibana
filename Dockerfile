@@ -1,5 +1,5 @@
 FROM nginx:1.7
-MAINTAINER Helder Correia <heldercorreia@morfose.net>
+MAINTAINER Jessica Liu
 
 # Install htpasswd utility and curl
 RUN apt-get update \
@@ -18,13 +18,16 @@ RUN mkdir -p /var/www \
 # Add default credentials
 RUN htpasswd -cb /etc/nginx/.htpasswd kibana "docker"
 
-# Copy Nginx config
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY kibana.conf /etc/nginx/conf.d/kibana.conf
-COPY kibana.yml /var/www/kibana/config/kibana.yml
-COPY kibana /etc/init.d/kibana
-RUN chmod +x /etc/init.d/kibana
-RUN update-rc.d kibana defaults 96 9 
+#install python2.7
+RUN apt-get update -y
+RUN apt-get install -y python2.7
+RUN ln -s /usr/bin/python2.7 /usr/bin/python
+
+#install amazon AWS CLI
+RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+RUN unzip awscli-bundle.zip
+RUN ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+RUN rm awscli-bundle.zip
 
 #add startup scirpts
 #using cmd to copy/update configuration files and keys from aws S3 
@@ -33,6 +36,5 @@ ADD scripts/startup_scripts  /usr/local/bin/startup_scripts
 RUN chmod +111 /usr/local/bin/startup_scripts
 
 EXPOSE 5601
-
 CMD ["/usr/local/bin/startup_scripts"]
 
