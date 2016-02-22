@@ -16,6 +16,8 @@ COPY config/kibana.conf /etc/nginx/conf.d/kibana.conf
 # Add default credentials
 RUN htpasswd -cb /etc/nginx/.htpasswd kibana "docker"
 
+EXPOSE 80 443
 
+CMD ["nginx", "-g", "daemon off;"]
 
 
