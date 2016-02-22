@@ -16,8 +16,8 @@ RUN mkdir -p /var/www \
  && mv /var/www/kibana-linux-x64 /var/www/kibana
 
 # Copy Nginx config
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY kibana.conf /etc/nginx/conf.d/kibana.conf
+COPY config/nginx.conf /etc/nginx/nginx.conf
+COPY config/kibana.conf /etc/nginx/conf.d/kibana.conf
 
 # Add default credentials
 RUN htpasswd -cb /etc/nginx/.htpasswd kibana "docker"
