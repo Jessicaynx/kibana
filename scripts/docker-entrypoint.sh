@@ -1,5 +1,7 @@
 #!/bin/bash
 
-set -e
+#change elasticsearch
 sed -ri "s!^(\#\s*)?(elasticsearch_url:).*!\2 '$ELASTICSEARCH_URL'!" /var/www/kibana/config/kibana.yml
-exec "$@"
+
+# start nginx
+service nginx start
