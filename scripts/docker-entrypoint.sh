@@ -7,5 +7,5 @@ sed -ri "s!^(\#\s*)?(elasticsearch_url:).*!\2 '$ELASTICSEARCH_URL'!" /var/www/ki
 service nginx restart
 
 # start kibana
-exec "kibana &"
+exec kibana
 exec "$@"
