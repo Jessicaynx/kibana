@@ -31,5 +31,5 @@ RUN chmod +x /docker-entrypoint.sh
 EXPOSE 5601
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["kibana"]
-
+CMD ["nginx", "-g", "daemon off;"]
 
