@@ -33,7 +33,7 @@ RUN rm awscli-bundle.zip
 #using cmd to copy/update configuration files and keys from aws S3 
 #and then start the service
 ADD scripts/startup_scripts  /usr/local/bin/startup_scripts
-RUN chmod +111 /usr/local/bin/startup_scripts
+RUN chmod +x /usr/local/bin/startup_scripts
 
 EXPOSE 5601
 CMD ["/usr/local/bin/startup_scripts"]
