@@ -3,7 +3,7 @@ MAINTAINER Jessica Liu
 
 # Install htpasswd utility and curl
 RUN apt-get update \
-    && apt-get install -y curl apache2-utils zip \
+    && apt-get install -y curl apache2-utils zip vim \
     && rm -rf /etc/nginx/conf.d/* \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
