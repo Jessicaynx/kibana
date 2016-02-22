@@ -8,4 +8,5 @@ aws s3 cp s3://$S3_BUNDLE_NAME/elk/kibana.yml /var/www/kibana/config/kibana.yml
 
 
 #run logstash
-logstash agent -f /usr/local/elk/conf/logstash.conf
+kibana
+nginx -g "daemon off;"
