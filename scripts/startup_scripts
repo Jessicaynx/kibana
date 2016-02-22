@@ -1,0 +1,11 @@
+#/bin/bash
+#copy/update configuration files 
+
+aws s3 cp s3://$S3_BUNDLE_NAME/elk/kibana /etc/init.d/kibana
+aws s3 cp s3://$S3_BUNDLE_NAME/elk/patterns/nginx.conf /etc/nginx/nginx.conf
+aws s3 cp s3://$S3_BUNDLE_NAME/elk/kibana.conf /etc/nginx/conf.d/kibana.conf
+aws s3 cp s3://$S3_BUNDLE_NAME/elk/kibana.yml /var/www/kibana/config/kibana.yml
+
+
+#run logstash
+logstash agent -f /usr/local/elk/conf/logstash.conf
