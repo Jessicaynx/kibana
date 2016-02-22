@@ -24,16 +24,15 @@ COPY kibana.conf /etc/nginx/conf.d/kibana.conf
 COPY kibana.yml /var/www/kibana/config/kibana.yml
 COPY kibana /etc/init.d/kibana
 RUN chmod +x /etc/init.d/kibana
+RUN update-rc.d kibana defaults 96 9 
+
+#add startup scirpts
+#using cmd to copy/update configuration files and keys from aws S3 
+#and then start the service
+ADD scripts/startup_scripts  /usr/local/bin/startup_scripts
+RUN chmod +111 /usr/local/bin/startup_scripts
 
 EXPOSE 5601
-# Set wrapper for runtime config
-COPY init.sh /
-RUN chmod +x /init.sh
-ENTRYPOINT ["/init.sh"]
 
-# Run nginx
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/usr/local/bin/startup_scripts"]
 
-RUN update-rc.d kibana defaults 96 9 \
- && service kibana start \
- && service nginx start 
