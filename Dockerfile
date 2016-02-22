@@ -23,11 +23,12 @@ COPY config/kibana.conf /etc/nginx/conf.d/kibana.conf
 RUN htpasswd -cb /etc/nginx/.htpasswd kibana "docker"
 
 #add startup scirpts
-#using cmd to copy/update configuration files and keys from aws S3 
-#and then start the service
-ADD scripts/startup_scripts  /usr/local/bin/startup_scripts
-RUN chmod +x /usr/local/bin/startup_scripts
+
+COPY scripts/docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
 
 EXPOSE 5601
-CMD ["/usr/local/bin/startup_scripts"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["kibana"]
+
 
