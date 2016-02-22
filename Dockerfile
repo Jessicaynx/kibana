@@ -22,10 +22,11 @@ COPY config/kibana.conf /etc/nginx/conf.d/kibana.conf
 # Add default credentials
 RUN htpasswd -cb /etc/nginx/.htpasswd kibana "docker"
 
-#add startup scirpts
 
+ENV PATH /var/www/kibana/bin:$PATH
 COPY scripts/docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
+
 
 EXPOSE 5601
 ENTRYPOINT ["/docker-entrypoint.sh"]
